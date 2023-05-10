@@ -1,0 +1,7 @@
+#app {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  transition: opacity 500ms;
+  overflow-y: auto;
+}
