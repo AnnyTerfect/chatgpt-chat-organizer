@@ -9,7 +9,7 @@ export default defineConfig({
     monkey({
       entry: 'src/main.jsx',
       userscript: {
-        icon: 'https://vitejs.dev/logo.svg',
+        icon: 'https://chat.openai.com/favicon.ico',
         namespace: 'npm/vite-plugin-monkey',
         match: ['https://chat.openai.com/*'],
       },
