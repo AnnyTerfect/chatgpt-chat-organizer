@@ -101,16 +101,17 @@ function App() {
   }
 
   function handleClickChat(id) {
-    const chat = allChat.find((chat) => chat.id === id);
-    const chatIndex = allChat.indexOf(chat);
-    if (!chat) {
-      throw new Error("Failed to find chat");
-    }
-
-    // If the chat is already selected, click the chat to reload the chat
-    const elementToClick = document.querySelectorAll("ol li a")[chatIndex];
-    if (elementToClick && chat.title.trim() === elementToClick.innerText.trim()) {
-      elementToClick.click();
+    const propsKey = Object.keys(document.querySelector("ol li")).find((key) =>
+      key.startsWith("__reactProps")
+    );
+    const elementToClick = Array.from(document.querySelectorAll("ol li")).find(
+      (element) => {
+        const props = element[propsKey].children.props;
+        return props && props.id === id;
+      }
+    );
+    if (elementToClick) {
+      elementToClick.children[0].click();
       setCurrentChatId(id);
     } else {
       // If the chat is not selected, change the url to the chat
@@ -221,20 +222,21 @@ function App() {
   }
 
   function handleDeleteChat(id) {
-    // Sync in the original element
-    const chat = allChat.find((chat) => chat.id === id);
-    const chatIndex = allChat.indexOf(chat);
-    if (!chat) {
-      throw new Error("Failed to find chat");
-    }
-
-    const elemntToRemove = document.querySelectorAll("ol li a")[chatIndex];
-    if (chat.title.trim() === elemntToRemove.innerText.trim()) {
-      elemntToRemove.remove();
+    const propsKey = Object.keys(document.querySelector("ol li")).find((key) =>
+      key.startsWith("__reactProps")
+    );
+    const elementToRemove = Array.from(document.querySelectorAll("ol li")).find(
+      (element) => {
+        const props = element[propsKey].children.props;
+        return props && props.id === id;
+      }
+    );
+    if (elementToRemove) {
+      elementToRemove.remove();
       console.log("remove successfully");
     } else {
       throw new Error(
-        `Failed to find chat. Titles mismatche.${chat.title} <> ${elemntToRemove.innerText}`
+        `Failed to find chat. id: ${id}, propsKey: ${propsKey}`
       );
     }
     deleteChat(id)
