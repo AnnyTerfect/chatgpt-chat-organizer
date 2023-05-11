@@ -24,6 +24,7 @@ export default function ChatTitle(props) {
         alignItems: "center",
         cursor: "pointer",
         backgroundColor: active ? "#404040" : "transparent",
+        color: "white",
       }}
       onClick={handleClickSwitch}
     >

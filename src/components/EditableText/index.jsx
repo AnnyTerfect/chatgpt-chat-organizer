@@ -88,7 +88,7 @@ export default forwardRef((props, ref) => {
         ></OutlinedInput>
       ) : (
         <ListItemText
-          sx={{ wordBreak: "break-word" }}
+          sx={{ wordBreak: "break-word", color: "white" }}
           primary={props.value}
           onClick={handleClickEdit}
         />

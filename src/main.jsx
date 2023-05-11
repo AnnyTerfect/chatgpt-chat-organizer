@@ -29,6 +29,12 @@ function prepare() {
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
+    text: {
+      primary: "#fff",
+    },
+    primary: {
+      main: "#fff",
+    },
   },
   typography: {
     fontFamily: ["Inter", "sans-serif"].join(","),
