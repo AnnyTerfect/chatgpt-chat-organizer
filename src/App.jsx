@@ -12,7 +12,6 @@ function App() {
     location.href.split("/").pop()
   );
   const [loaded, setLoaded] = useState(false);
-  const [allChat, setAllChat] = useState([]);
   const [organizedChats, setOrganizedChats] = useState({
     foldered: [],
     unfoldered: [],
@@ -20,11 +19,6 @@ function App() {
 
   const update = () => {
     getAllChat()
-      .then((allChat) => {
-        setAllChat(allChat);
-        localStorage.allChat = JSON.stringify(allChat);
-        return allChat;
-      })
       .then(organizeChatsByFolder)
       .then((organizedChats) => {
         localStorage.organizedChats = JSON.stringify(organizedChats);
@@ -35,9 +29,6 @@ function App() {
   };
 
   useEffect(() => {
-    if (localStorage.allChat) {
-      setAllChat(JSON.parse(localStorage.allChat));
-    }
     if (localStorage.organizedChats) {
       setOrganizedChats(JSON.parse(localStorage.organizedChats));
     }
@@ -70,8 +61,7 @@ function App() {
     if (!loaded) return;
     saveOrganizedChatsToFolder(organizedChats);
     localStorage.organizedChats = JSON.stringify(organizedChats);
-    localStorage.allChat = JSON.stringify(allChat);
-  }, [organizedChats, allChat, loaded]);
+  }, [organizedChats, loaded]);
 
   function handleClickAddFolder() {
     const newFolder = {
@@ -251,8 +241,7 @@ function App() {
         const newUnfoldered = organizedChats.unfoldered.filter(
           (chat) => chat.id !== id
         );
-        // Update current chat
-        setAllChat(allChat.filter((chat) => chat.id !== id));
+
         setOrganizedChats({
           ...organizedChats,
           foldered: newFoldered,
