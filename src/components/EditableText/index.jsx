@@ -55,6 +55,7 @@ export default forwardRef((props, ref) => {
   return (
     <>
       {edit ? (
+        // Input if editing
         <OutlinedInput
           sx={{
             p: props.editable ? undefined : 0.5,
@@ -87,6 +88,7 @@ export default forwardRef((props, ref) => {
           }
         ></OutlinedInput>
       ) : (
+        // Text if not editing
         <ListItemText
           sx={{ wordBreak: "break-word", color: "white" }}
           primary={props.value}

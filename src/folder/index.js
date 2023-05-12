@@ -6,12 +6,6 @@ function setFolder(folders) {
   localStorage.folders = JSON.stringify(folders);
 }
 
-function getChatsByFolderId(folderId) {
-  const folders = getFolder();
-  const folder = folders.find((folder) => folder.id === folderId);
-  return folder ? folder.chats : [];
-}
-
 function addChatToFolder(folderId, chatId) {
   const folders = getFolder();
   const folder = folders.find((folder) => folder.id === folderId);
@@ -60,4 +54,4 @@ function saveOrganizedChatsToFolder(organizedChats) {
   setFolder(folders);
 }
 
-export { getFolder, getChatsByFolderId, addChatToFolder, organizeChatsByFolder, saveOrganizedChatsToFolder }
+export { getFolder, addChatToFolder, organizeChatsByFolder, saveOrganizedChatsToFolder }

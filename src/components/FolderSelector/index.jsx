@@ -25,12 +25,10 @@ export default function FolderSelector(props) {
   };
 
   const handleClose = (event) => {
-    console.log(anchorRef.current)
-    console.log(anchorRef.current.contains(event.target))
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-    setOpen(false)
+    setOpen(false);
   };
 
   return (
@@ -73,8 +71,8 @@ export default function FolderSelector(props) {
                     return (
                       <MenuItem
                         onClick={(e) => {
-                          e.stopPropagation()
-                          props.onSelect(folder.id)
+                          e.stopPropagation();
+                          props.onSelect(folder.id);
                         }}
                         key={folder.id}
                       >
