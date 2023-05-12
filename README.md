@@ -2,6 +2,12 @@
 
 This GreasyFork script provides a convenient way to organize chats within ChatGPT by allowing users to create and customize folders for efficient chat management.
 
+## Example
+
+After installing this script, your chat window will be like:
+![example1](images/example1.png)
+![example2](images/example2.png)
+
 ## Highlights
 
 - **Efficient Chat Organization:** The script enables users to organize their ChatGPT conversations into personalized folders, facilitating better chat management and easy access to specific chats.
