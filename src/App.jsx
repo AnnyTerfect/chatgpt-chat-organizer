@@ -1,25 +1,11 @@
 import { useEffect, useState } from "react";
+import { Box, Divider } from "@mui/material";
 import ChatList from "./components/ChatList";
 import ChatFolder from "./components/ChatFolder";
 import AddFolderButton from "./components/Button/AddFolder";
 import { organizeChatsByFolder, saveOrganizedChatsToFolder } from "./folder";
 import { getAllChat, changeChatTitle, deleteChat } from "./requests";
-import { Box, Divider } from "@mui/material";
-
-function debounce(func, delay) {
-  let timerId;
-
-  return function () {
-    const context = this;
-    const args = arguments;
-
-    clearTimeout(timerId);
-
-    timerId = setTimeout(function () {
-      func.apply(context, args);
-    }, delay);
-  };
-}
+import { debounce } from "./utils";
 
 function App() {
   const [currentChatId, setCurrentChatId] = useState(
@@ -36,15 +22,25 @@ function App() {
     getAllChat()
       .then((allChat) => {
         setAllChat(allChat);
+        localStorage.allChat = JSON.stringify(allChat);
         return allChat;
       })
       .then(organizeChatsByFolder)
+      .then((organizedChats) => {
+        localStorage.organizedChats = JSON.stringify(organizedChats);
+        return organizedChats;
+      })
       .then(setOrganizedChats)
       .then(() => setLoaded(true));
   };
 
   useEffect(() => {
-    update();
+    if (localStorage.allChat) {
+      setAllChat(JSON.parse(localStorage.allChat));
+    }
+    if (localStorage.organizedChats) {
+      setOrganizedChats(JSON.parse(localStorage.organizedChats));
+    }
   }, []);
 
   useEffect(() => {
@@ -114,12 +110,12 @@ function App() {
       elementToClick.children[0].click();
       setCurrentChatId(id);
     } else {
-      // If the chat is not selected, change the url to the chat
+      // If the chat does not exists, change the url to the chat
       location.href = `/c/${id}`;
     }
   }
 
-  function handleChangeTitle(id, title) {
+  function handleChangeFolderTitle(id, title) {
     const newFoldered = organizedChats.foldered.map((folder) => {
       if (folder.id === id) {
         folder.name = title;
@@ -233,11 +229,6 @@ function App() {
     );
     if (elementToRemove) {
       elementToRemove.remove();
-      console.log("remove successfully");
-    } else {
-      throw new Error(
-        `Failed to find chat. id: ${id}, propsKey: ${propsKey}`
-      );
     }
     deleteChat(id)
       .then((res) => {
@@ -263,6 +254,7 @@ function App() {
           foldered: newFoldered,
           unfoldered: newUnfoldered,
         });
+        console.log("remove successfully");
       })
       .catch(console.error);
   }
@@ -281,7 +273,7 @@ function App() {
                 title={folder.name}
                 chats={folder.chats}
                 onChangeTitle={(newTitle) =>
-                  handleChangeTitle(folder.id, newTitle)
+                  handleChangeFolderTitle(folder.id, newTitle)
                 }
                 onChangeChatTitle={handleChangeChatTitle}
                 onMoveChat={handleMoveChat}

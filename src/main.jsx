@@ -3,13 +3,14 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import "./index.css";
+import { debounce } from "./utils";
 
 let scrollTimer = null;
 
 function prepare() {
   // Hide the original
   const originalChatContainer = document.querySelector(
-    "#__next > div.overflow-hidden.w-full.h-full.relative.flex.z-0 > div.dark.flex-shrink-0.overflow-x-hidden.bg-gray-900 > div > div > div > nav > div.flex-col.flex-1.transition-opacity.duration-500.overflow-y-auto"
+    ".flex-col.flex-1.transition-opacity.duration-500.overflow-y-auto"
   );
   originalChatContainer.style.position = "fixed";
   originalChatContainer.style.height = "10px";
@@ -78,23 +79,8 @@ function createApp() {
   );
 }
 
-function debounce(func, delay) {
-  let timerId;
-
-  return function () {
-    const context = this;
-    const args = arguments;
-
-    clearTimeout(timerId);
-
-    timerId = setTimeout(function () {
-      func.apply(context, args);
-    }, delay);
-  };
-}
-
 window.addEventListener("load", () => {
-  const debouncedCreateApp = debounce(createApp, 1000);
+  const debouncedCreateApp = debounce(createApp, 100);
 
   prepare();
   debouncedCreateApp();
