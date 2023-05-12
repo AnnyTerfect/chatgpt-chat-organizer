@@ -41,6 +41,8 @@ function App() {
     if (localStorage.organizedChats) {
       setOrganizedChats(JSON.parse(localStorage.organizedChats));
     }
+    setLoaded(true);
+    update();
   }, []);
 
   useEffect(() => {
@@ -67,7 +69,9 @@ function App() {
   useEffect(() => {
     if (!loaded) return;
     saveOrganizedChatsToFolder(organizedChats);
-  }, [organizedChats, loaded]);
+    localStorage.organizedChats = JSON.stringify(organizedChats);
+    localStorage.allChat = JSON.stringify(allChat);
+  }, [organizedChats, allChat, loaded]);
 
   function handleClickAddFolder() {
     const newFolder = {
