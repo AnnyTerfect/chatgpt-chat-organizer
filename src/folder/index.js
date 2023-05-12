@@ -15,25 +15,13 @@ function saveOrganizedChats(organizedChats) {
 }
 
 function organizeChatsByFolder(chats) {
-  const folders = getFolder();
-
-  return {
-    foldered: folders.map((folder) => {
-      return {
-        id: folder.id,
-        name: folder.name,
-        open: folder.open,
-        chats: chats.filter((chat) => {
-          return folder.chats.some((chatId) => chatId === chat.id);
-        })
-      }
-    }),
-    unfoldered: chats.filter((chat) => {
-      return !folders.some((folder) => {
-        return folder.chats.some((chatId) => chatId === chat.id);
-      });
-    })
-  }
+  organizedChats = loadOrganizedChats();
+  organizedChats.foldered = organizedChats.foldered.map(folder => ({
+    ...folder,
+    chats: folder.chats.map(chatId => chats.find(chat => chat.id === chatId))
+  }));
+  organizedChats.unfoldered = organizedChats.unfoldered.map(chatId => chats.find(chat => chat.id === chatId));
+  return organizedChats;
 }
 
 export { loadOrganizedChats, saveOrganizedChats, organizeChatsByFolder };
