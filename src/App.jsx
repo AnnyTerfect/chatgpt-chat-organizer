@@ -68,7 +68,7 @@ function App() {
     });
   }
 
-  function handleSetOpen(id, open) {
+  function handleOpenFolder(id, open) {
     const newFoldered = organizedChats.foldered
       .sort((a, b) => a.name.localeCompare(b.name))
       .map((folder) => {
@@ -218,11 +218,6 @@ function App() {
       elementToRemove.remove();
     }
     deleteChat(id)
-      .then((res) => {
-        if (!res) {
-          throw new Error("Failed to delete chat");
-        }
-      })
       .then(() => {
         const newFoldered = organizedChats.foldered.map((folder) => {
           const newChats = folder.chats.filter((chat) => chat.id !== id);
@@ -268,7 +263,7 @@ function App() {
                 onClickChat={handleClickChat}
                 editable={true}
                 open={folder.open}
-                setOpen={(open) => handleSetOpen(folder.id, open)}
+                setOpen={(open) => handleOpenFolder(folder.id, open)}
                 currentChatId={currentChatId}
               />
               <Divider />
