@@ -1,23 +1,17 @@
-function getFolder() {
-  return localStorage.folders ? JSON.parse(localStorage.folders) : [];
-}
-
-function setFolder(folders) {
-  localStorage.folders = JSON.stringify(folders);
-}
-
-function addChatToFolder(folderId, chatId) {
-  const folders = getFolder();
-  const folder = folders.find((folder) => folder.id === folderId);
-  if (folder) {
-    folder.chats.push(chatId);
-  } else {
-    folders.push({
-      id: folderId,
-      chats: [chatId]
-    });
+function loadOrganizedChats() {
+  try {
+    return JSON.parse(localStorage.organizedChats);
   }
-  setFolder(folders);
+  catch (e) {
+    return {
+      foldered: [],
+      unfoldered: []
+    }
+  }
+}
+
+function saveOrganizedChats(organizedChats) {
+  localStorage.organizedChats = JSON.stringify(organizedChats);
 }
 
 function organizeChatsByFolder(chats) {
@@ -42,16 +36,4 @@ function organizeChatsByFolder(chats) {
   }
 }
 
-function saveOrganizedChatsToFolder(organizedChats) {
-  const folders = organizedChats.foldered.map((folder) => {
-    return {
-      id: folder.id,
-      name: folder.name,
-      open: folder.open,
-      chats: folder.chats.map((chat) => chat.id)
-    }
-  });
-  setFolder(folders);
-}
-
-export { getFolder, addChatToFolder, organizeChatsByFolder, saveOrganizedChatsToFolder }
+export { loadOrganizedChats, saveOrganizedChats, organizeChatsByFolder };

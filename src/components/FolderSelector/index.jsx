@@ -9,12 +9,12 @@ import {
   MenuList,
   MenuItem,
 } from "@mui/material";
-import { getFolder } from "../../folder";
+import { loadOrganizedChats } from "../../folder";
 import Folder from "@mui/icons-material/Folder";
 import MoveToInbox from "@mui/icons-material/MoveToInbox";
 
 export default function FolderSelector(props) {
-  const allFolder = getFolder();
+  const allFolder = loadOrganizedChats().foldered;
 
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);

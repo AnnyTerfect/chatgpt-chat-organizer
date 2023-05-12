@@ -3,7 +3,11 @@ import { Box, Divider } from "@mui/material";
 import ChatList from "./components/ChatList";
 import ChatFolder from "./components/ChatFolder";
 import AddFolderButton from "./components/Button/AddFolder";
-import { organizeChatsByFolder, saveOrganizedChatsToFolder } from "./folder";
+import {
+  loadOrganizedChats,
+  saveOrganizedChats,
+  organizeChatsByFolder,
+} from "./folder";
 import { getAllChat, changeChatTitle, deleteChat } from "./requests";
 import { debounce } from "./utils";
 
@@ -12,26 +16,16 @@ function App() {
     location.href.split("/").pop()
   );
   const [loaded, setLoaded] = useState(false);
-  const [organizedChats, setOrganizedChats] = useState({
-    foldered: [],
-    unfoldered: [],
-  });
+  const [organizedChats, setOrganizedChats] = useState(loadOrganizedChats());
 
   const update = () => {
     getAllChat()
       .then(organizeChatsByFolder)
-      .then((organizedChats) => {
-        localStorage.organizedChats = JSON.stringify(organizedChats);
-        return organizedChats;
-      })
       .then(setOrganizedChats)
       .then(() => setLoaded(true));
   };
 
   useEffect(() => {
-    if (localStorage.organizedChats) {
-      setOrganizedChats(JSON.parse(localStorage.organizedChats));
-    }
     setLoaded(true);
     update();
   }, []);
@@ -59,8 +53,7 @@ function App() {
 
   useEffect(() => {
     if (!loaded) return;
-    saveOrganizedChatsToFolder(organizedChats);
-    localStorage.organizedChats = JSON.stringify(organizedChats);
+    saveOrganizedChats(organizedChats);
   }, [organizedChats, loaded]);
 
   function handleClickAddFolder() {
