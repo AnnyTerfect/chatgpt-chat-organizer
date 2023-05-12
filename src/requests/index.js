@@ -41,10 +41,8 @@ function deleteChat(chatId) {
     })
     .then(checkAndJSON)
     .then((json) => {
-      if (json.success) {
-        return true;
-      } else {
-        return false;
+      if (!json.success) {
+        throw new Error("Delete chat failed");
       }
     });
 }
