@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import "./index.css";
+import { ThemeProvider } from "@mui/material/styles";
 import { debounce } from "./utils";
+import { darkTheme } from "./mui";
+import "./index.css";
 
 let scrollTimer = null;
 
@@ -28,16 +29,6 @@ function prepare() {
   }, 500);
 }
 
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-  typography: {
-    fontFamily: ["Inter", "sans-serif"].join(","),
-    fontSize: 11,
-  },
-});
-
 let root = null;
 
 function createApp() {
@@ -56,6 +47,7 @@ function createApp() {
         return document.querySelector("#app");
       }
 
+      // Mount before the original chat container
       const app = document.createElement("div");
       app.id = "app";
       const anchor = document.querySelector(
@@ -80,7 +72,8 @@ window.addEventListener("load", () => {
   prepare();
   debouncedCreateApp();
 
-  // Observe
+  // Observe the chat container to auto remount the app
+  // This is due to ChatGPT website will remount the original chat container after switching chat
   const observeTarget = document.querySelector("#__next");
   const observer = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
