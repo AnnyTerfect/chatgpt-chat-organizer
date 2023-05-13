@@ -17,6 +17,7 @@ function prepare() {
   originalChatContainer.style.width = "10px";
   originalChatContainer.style.zIndex = -1;
 
+  // Auto scroll to fetch new chats
   clearInterval(scrollTimer);
   scrollTimer = setInterval(() => {
     originalChatContainer.scrollTop = 0;
@@ -30,12 +31,6 @@ function prepare() {
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
-    text: {
-      primary: "#fff",
-    },
-    primary: {
-      main: "#fff",
-    },
   },
   typography: {
     fontFamily: ["Inter", "sans-serif"].join(","),
