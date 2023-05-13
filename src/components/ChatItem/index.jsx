@@ -18,7 +18,7 @@ export default function Chat(props) {
           justifyContent: "space-between",
           alignItems: "center",
           cursor: "pointer",
-          backgroundColor: props.active ? "#404040" : "transparent",
+          backgroundColor: props.active ? "#404040" : "transparent", // Whether the chat is active
         }}
         onClick={() => props.onClickChat(props.id)}
       >
@@ -31,6 +31,7 @@ export default function Chat(props) {
           onChange={props.onChangeChatTitle}
           editable={false}
         />
+        // Functional buttons include edit, move, and delete
         <Box
           sx={{
             display: "flex",
