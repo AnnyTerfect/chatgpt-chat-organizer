@@ -3,6 +3,7 @@ import { Box, Divider } from "@mui/material";
 import ChatList from "./components/ChatList";
 import ChatFolder from "./components/ChatFolder";
 import AddFolderButton from "./components/Button/AddFolder";
+import UpdateButton from "./components/Button/Update";
 import {
   loadOrganizedChats,
   saveOrganizedChats,
@@ -10,6 +11,7 @@ import {
 } from "./folder";
 import { getAllChat, changeChatTitle, deleteChat } from "./requests/chat";
 import { debounce } from "./utils";
+import { checkUpdate } from "./requests/script";
 
 function App() {
   const [currentChatId, setCurrentChatId] = useState(
@@ -17,6 +19,7 @@ function App() {
   );
   const [loaded, setLoaded] = useState(false);
   const [organizedChats, setOrganizedChats] = useState(loadOrganizedChats());
+  const [newVersion, setNewVersion] = useState(false);
 
   const update = () => {
     getAllChat()
@@ -27,6 +30,7 @@ function App() {
 
   useEffect(() => {
     update();
+    checkUpdate().then(setNewVersion);
   }, []);
 
   useEffect(() => {
@@ -280,7 +284,7 @@ function App() {
           onClickChat={handleClickChat}
         />
       }
-      <div>{GM.GM_info.downloadURL}</div>
+      <Box sx={{ textAlign: "center" }}>{newVersion && <UpdateButton />}</Box>
     </div>
   );
 }
