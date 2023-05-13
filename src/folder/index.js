@@ -18,9 +18,9 @@ function organizeChatsByFolder(chats) {
   const organizedChats = loadOrganizedChats();
   organizedChats.foldered = organizedChats.foldered.map(folder => ({
     ...folder,
-    chats: folder.chats.map(chatId => chats.find(chat => chat.id === chatId))
+    chats: folder.chats.filter(chat => chats.find(c => c.id === chat.id))
   }));
-  organizedChats.unfoldered = organizedChats.unfoldered.map(chatId => chats.find(chat => chat.id === chatId));
+  organizedChats.unfoldered = chats.filter(chat => !organizedChats.foldered.find(folder => folder.chats.find(c => c.id === chat.id)));
   return organizedChats;
 }
 
