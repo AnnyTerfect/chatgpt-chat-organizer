@@ -31,7 +31,7 @@ export default function Chat(props) {
           onChange={props.onChangeChatTitle}
           editable={false}
         />
-        // Functional buttons include edit, move, and delete
+        {/*Functional buttons include edit, move, and delete*/}
         <Box
           sx={{
             display: "flex",
