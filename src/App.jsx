@@ -26,8 +26,8 @@ function App() {
   };
 
   useEffect(() => {
-    setLoaded(true);
     update();
+    setLoaded(true);
   }, []);
 
   useEffect(() => {
