@@ -123,6 +123,7 @@ function App() {
         }
       })
       .then(() => {
+        // Update chat title
         const newFoldered = organizedChats.foldered.map((folder) => {
           const newChats = folder.chats.map((chat) => {
             if (chat.id === id) {
