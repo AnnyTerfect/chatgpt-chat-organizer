@@ -1,7 +1,7 @@
 {
-  "name": "chatgpt-chat-organizer (Beta)",
+  "name": "chatgpt-chat-organizer",
   "private": true,
-  "version": "0.0.4.99",
+  "version": "0.1.0",
   "type": "module",
   "description": "This GreasyFork script provides a convenient way to organize chats within ChatGPT by allowing users to create and customize folders for efficient chat management.",
   "license": "MIT",
