@@ -80,6 +80,7 @@ window.addEventListener("load", () => {
   prepare();
   debouncedCreateApp();
 
+  // Observe
   const observeTarget = document.querySelector("#__next");
   const observer = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
@@ -102,12 +103,3 @@ window.addEventListener("load", () => {
     subtree: true,
   });
 });
-
-// Fix fetch limit
-window.oldFetch = window.fetch;
-window.fetch = function (url, options) {
-  if (url.includes("limit=28")) {
-    url = url.replace("limit=28", "limit=100");
-  }
-  return oldFetch(url, options);
-};
