@@ -5,7 +5,7 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import EditableText from "../EditableText";
 
-export default function ChatTitle(props) {
+export default function FolderTitle(props) {
   const active = props.chats
     .map((chat) => chat.id)
     .includes(location.href.split("/").pop());
