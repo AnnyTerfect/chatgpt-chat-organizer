@@ -10,7 +10,6 @@ import {
 } from "./folder";
 import { getAllChat, changeChatTitle, deleteChat } from "./requests/chat";
 import { debounce } from "./utils";
-import * as GM from "$";
 
 function App() {
   const [currentChatId, setCurrentChatId] = useState(
