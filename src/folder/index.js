@@ -15,7 +15,7 @@ function saveOrganizedChats(organizedChats) {
 }
 
 function organizeChatsByFolder(chats) {
-  organizedChats = loadOrganizedChats();
+  const organizedChats = loadOrganizedChats();
   organizedChats.foldered = organizedChats.foldered.map(folder => ({
     ...folder,
     chats: folder.chats.map(chatId => chats.find(chat => chat.id === chatId))
