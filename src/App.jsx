@@ -8,8 +8,9 @@ import {
   saveOrganizedChats,
   organizeChatsByFolder,
 } from "./folder";
-import { getAllChat, changeChatTitle, deleteChat } from "./requests";
+import { getAllChat, changeChatTitle, deleteChat } from "./requests/chat";
 import { debounce } from "./utils";
+import * as GM from "$";
 
 function App() {
   const [currentChatId, setCurrentChatId] = useState(
@@ -280,6 +281,7 @@ function App() {
           onClickChat={handleClickChat}
         />
       }
+      <div>{GM.GM_info.downloadURL}</div>
     </div>
   );
 }
